@@ -1,41 +1,37 @@
-
-const highscoreList = document.getElementById('highscores');
-const clearBtn = document.getElementById('clear');
+const highscoreList = document.getElementById("highscores");
+const clearBtn = document.getElementById("clear");
 
 let highscores = [];
 
-
-const newScoreJSON = localStorage.getItem('newScore');
+const newScoreJSON = localStorage.getItem("newScore");
 
 if (newScoreJSON) {
-    try {
-        const newScores = JSON.parse(newScoreJSON);
-        highscores.push(...newScores);
-    } catch (error) {
-        console.error('Error parsing newScore JSON:', error);
-    }
+  try {
+    const newScores = JSON.parse(newScoreJSON);
+    highscores.push(...newScores);
+  } catch (error) {
+    console.error("Error parsing newScore JSON:", error);
+  }
 }
 
 function createHighScores() {
-    highscoreList.innerHTML = '';
+  highscoreList.innerHTML = "";
 
-    const sortedScores = [...highscores].sort((a, b) => b.score - a.score);
+  const sortedScores = [...highscores].sort((a, b) => b.score - a.score);
 
-    sortedScores.forEach((score, index) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${score.name} - ${score.score}`;
-        highscoreList.appendChild(listItem);
-    });
+  sortedScores.forEach((score, index) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = `${score.name} - ${score.score}`;
+    highscoreList.appendChild(listItem);
+  });
 }
-
 
 function clearHighScores() {
-    localStorage.removeItem('newScore');
-    highscores = [];
-    createHighScores();
+  localStorage.removeItem("newScore");
+  highscores = [];
+  createHighScores();
 }
 
+clearBtn.addEventListener("click", clearHighScores);
 
-clearBtn.addEventListener('click', clearHighScores);
-
-window.addEventListener('load', createHighScores);
+window.addEventListener("load", createHighScores);
